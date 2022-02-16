@@ -1,45 +1,83 @@
 version: 0.1
 component: build
-timeoutInSeconds: 6000
+timeoutInSeconds: 600
 runAs: root
 shell: bash
 env:
-variables:
-"testEnv" : "testVariable"
-exportedVariables:
-- VERS
-- param1
-- CONTENTS_ARTIFACT_BY_ID
-- CONTENTS_ARTIFACT_BY_PATH
+  variables:
+    "major_version" : "1.1"
+  exportedVariables:
+    - major_version
+    - CONTENTS_ARTIFACT_BY_ID_S2
+    - CONTENTS_ARTIFACT_BY_PATH_S2
 
 inputArtifacts:
-- name: generic-artifact-by-id
-type: GENERIC_ARTIFACT
-artifactId: ${ARTIFACT_ID}
-location: artifactById.txt
-- name: generic-artifact-by-path
-type: GENERIC_ARTIFACT
-registryId: ${REGISTRY_ID}
-path: ${ARTIFACT_PATH}
-version: ${ARTIFACT_VERSION}
-location: ${ARTIFACT_DOWNLOAD_PATH} ## Send as 'artifactByPath.txt' till outputArtifacts supports parameterized location
+  - name: FILE_ARTIFACT_BY_ID
+    location: Stage2_artifactById.txt
+  - name: FILE_ARTIFACT_BY_PATH
+    type: STAGE_ARTIFACT
+    location: Stage2_artifactByPath.txt
 
 steps:
-- type: Command
-name: "Maven build step"
-command: |
-echo "Hello build stage"
-mvn clean install
-- type: Command
-name: "Export artifact contents"
-command: |
-cat artifactById.txt && export CONTENTS_ARTIFACT_BY_ID=`cat artifactById.txt`
-cat ${ARTIFACT_DOWNLOAD_PATH} && export CONTENTS_ARTIFACT_BY_PATH=`cat ${ARTIFACT_DOWNLOAD_PATH}`
-
+  - type: Command
+    name: "PreReq install"
+    command: |
+      yum -y install curl
+  - type: Command
+    name: "Dockerize"
+    command: |
+      docker build -t docktest .
+  - type: Command
+    name: "Save"
+    command: |
+      docker save docktest -o docktest.tar
+  - type: Command
+    name: "SaveResult"
+    command: |
+      ls >> dockImagesResult.txt
+  #   - type: Command
+  #     name: "SaveResult"
+  #     command: |
+  #       export major_version=1.2
+  - type: Command
+    name: "Export artifact contents"
+    command: |
+      cat Stage2_artifactById.txt && export CONTENTS_ARTIFACT_BY_ID_S2=`cat Stage2_artifactById.txt`
+      cat Stage2_artifactByPath.txt && export CONTENTS_ARTIFACT_BY_PATH_S2=`cat Stage2_artifactByPath.txt`
 outputArtifacts:
-- name: FILE_ARTIFACT_BY_ID
-type: BINARY
-location: artifactById.txt
-- name: FILE_ARTIFACT_BY_PATH
-type: BINARY
-location: artifactByPath.txt
+  - name: docktest
+    type: BINARY
+    location: docktest.tar
+  - name: docktestdocker
+    type: DOCKER_IMAGE
+    location: docktest
+
+
+#version: 0.1
+#component: build
+#timeoutInSeconds: 600
+#runAs: root
+#shell: bash
+#env:
+#  exportedVariables:
+#    - version
+#steps:
+#  - type: Command
+#    name: "Build golang app"
+#    timeoutInSeconds: 600
+#    command: |
+#      wget -nv https://dl.google.com/go/go1.16.5.linux-amd64.tar.gz
+#      tar -C /usr/local -xzf go1.16.5.linux-amd64.tar.gz
+#      rm -rf go1.16.5.linux-amd64.tar.gz
+#      export PATH="/usr/local/go/bin:$PATH"
+#      export GOPATH="/usr/local/go"
+#      export PATH="$GOPATH/bin:$PATH"
+#      go version
+#      go build -o golangWebApp main.go
+#      ls -a
+#      echo "build finished.."
+#
+#outputArtifacts:
+#  - name: goWebAppArtifact
+#    type: BINARY
+#    location: golangWebApp
