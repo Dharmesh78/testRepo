@@ -3,9 +3,6 @@ component: build
 timeoutInSeconds: 600
 runAs: root
 shell: bash
-env:
-  variables:
-    "var": "NEW VAULE OF EXPORT FROM BUILDSPEC VARIABLE SECTION"
 steps:
   - type: Command
     name: "Build dummy App"
