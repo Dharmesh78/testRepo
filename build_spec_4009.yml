@@ -11,7 +11,7 @@ steps:
       echo "------------------- CAME IN STAGE 2 ----------------------"
       touch dummy2.txt
       echo "value of exp var before assign: "$OCI_PIPELINE_ID
-      var=82
+      OCI_PIPELINE_ID=82
       echo "value of exp var after assign: "$OCI_PIPELINE_ID
 
       echo "value of vault var *** : "
