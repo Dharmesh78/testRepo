@@ -1,34 +1,31 @@
 version: 0.1
 component: build
-timeoutInSeconds: 6000
+timeoutInSeconds: 600
 runAs: root
 shell: bash
-
 env:
-  # base64 encoded config file and private key are stored in vault
-  vaultVariables:
-    configFile : <config file secret ocid>
-    ociCliApiPrivateKey : <private key secret ocid>
-
+  variables:
+    "var": "NEW VAULE OF EXPORT FROM BUILDSPEC VARIABLE SECTION"
 steps:
   - type: Command
-    name: "Setup oci cli with api key"
-    timeoutInSeconds: 400
+    name: "Build dummy App"
+    timeoutInSeconds: 600
     command: |
-      echo "Setup oci-cli directory to store oci private api key and config file."
-      mkdir -p /workspace/oci-cli
+      echo "------------------- CAME IN STAGE 2 ----------------------"
+      touch dummy2.txt
+      echo "value of exp var before assign: "$var
+      var=82
+      echo "value of exp var after assign: "$var
 
-      echo "Download oci private api key to the oci-cli directory."
-      echo $ociCliApiPrivateKey | base64 --decode > /workspace/oci-cli/oci_api_key.pem
+      echo "value of vault var *** : "
 
-      echo "Download oci config file to the oci-cli directory."
-      echo $configFile | base64 --decode > /workspace/oci-cli/config
-
-      echo "Configure oci cli to use api_key that was downloaded."
-      export OCI_CLI_AUTH=api_key
-      export OCI_CLI_SUPPRESS_FILE_PERMISSIONS_WARNING=True
-      export OCI_CLI_CONFIG_FILE=/workspace/oci-cli/config
-
-      echo "Testing the setup"
-      oci os ns get
-      echo "lets see!!"
+      ls -a
+      echo "value of SYS var with pipeline param override : "${OCI_STAGE_ID}
+      
+      echo "value of SYS var 2 with build run arg override : "${OCI_WORKSPACE_DIR}
+      echo 
+      echo "build finished.."
+outputArtifacts:
+  - name: dummyArtifact
+    type: BINARY
+    location: dummy2.txt
