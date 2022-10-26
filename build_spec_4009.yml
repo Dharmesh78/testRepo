@@ -8,7 +8,8 @@ steps:
     name: "Build dummy App"
     timeoutInSeconds: 600
     command: |
-      echo "------------------- CAME IN STAGE 2 ----------------------"
+      echo "------------------- CAME IN STAGE 1 ----------------------"
+      echo "OCI_RPST Region: "${OCI_RESOURCE_PRINCIPAL_REGION}
       touch dummy2.txt
       echo "value of exp var before assign: "${OCI_PIPELINE_ID}
       OCI_PIPELINE_ID=82
