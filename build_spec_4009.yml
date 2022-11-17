@@ -2,7 +2,7 @@ version: 0.1
 component: build
 timeoutInSeconds: 600
 runAs: root
-shell: bash
+shell: sh
 steps:
   - type: Command
     name: "Build dummy App"
