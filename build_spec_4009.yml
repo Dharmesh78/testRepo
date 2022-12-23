@@ -8,6 +8,7 @@ steps:
     name: "Build dummy App"
     timeoutInSeconds: 600
     command: |
+      sleep 5000
       echo $SHELL
       echo "------------------- CAME IN STAGE 1 ----------------------"
       echo "OCI_RPST Region: "${OCI_RESOURCE_PRINCIPAL_REGION}
