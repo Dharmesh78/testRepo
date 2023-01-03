@@ -8,6 +8,7 @@ steps:
     name: "define env"
     timeoutInSeconds: 600
     command: |
+      touch dummy2.txt
       export VAR_TEMP="value"
   - type: Command
     name: "check env"
