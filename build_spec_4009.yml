@@ -3,6 +3,9 @@ component: build
 timeoutInSeconds: 600
 runAs: root
 shell: /bin/sh
+env:
+  variables:
+    "VAR_TEMP":"initialValue"
 steps:
   - type: Command
     name: "define env"
