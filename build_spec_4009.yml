@@ -5,25 +5,12 @@ runAs: root
 shell: /bin/sh
 steps:
   - type: Command
-    name: "Build dummy App"
+    name: "define env"
     timeoutInSeconds: 600
     command: |
-      echo $SHELL
-      echo "------------------- CAME IN STAGE 1 ----------------------"
-      echo "OCI_RPST Region: "${OCI_RESOURCE_PRINCIPAL_REGION}
-      touch dummy2.txt
-      echo "value of exp var before assign: "${OCI_PIPELINE_ID}
-      OCI_PIPELINE_ID=82
-      echo "value of exp var after assign: "${OCI_PIPELINE_ID}
-
-      echo "value of vault var *** : "
       export VAR_TEMP="value"
-      ls -a
-      echo "value of SYS var with pipeline param override : "${OCI_STAGE_ID}
-      
-      echo "value of SYS var 2 with build run arg override : "${OCI_WORKSPACE_DIR}
   - type: Command
-    name: "Build dummy App"
+    name: "check env"
     timeoutInSeconds: 600
     command: |
       echo "VAR TEMP value:"$VAR_TEMP
