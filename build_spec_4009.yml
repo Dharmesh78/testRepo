@@ -13,6 +13,7 @@ steps:
     timeoutInSeconds: 600
     command: |
       touch dummy2.txt
+      kubectl -v
       export VAR_TEMP="value"
   - type: Command
     name: "check env"
