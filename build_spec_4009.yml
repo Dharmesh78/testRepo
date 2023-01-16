@@ -9,10 +9,13 @@ env:
 
 steps:
   - type: Command
+    name: "usage command"
+    timeoutInSeconds: 600
+    command: usage
+  - type: Command
     name: "define env"
     timeoutInSeconds: 600
     command: |
-      mavan blablabla 
       touch dummy2.txt
       kubectl -v
       export VAR_TEMP="value"
