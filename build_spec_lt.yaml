@@ -13,10 +13,6 @@ env:
     - test_env
     - test_env1
 
-inputArtifacts:
-  - name: hello-dev-jar
-    location: /workspace/Source/hello123.class
-
 steps:
   - type: Command
     name: "Build Source"
@@ -51,10 +47,8 @@ steps:
       ls -lart
       rm -rf target/
       ls -lart
-      cd src/main/java/org/example/
       echo "commit7" > output.txt
       patch_number=100
-      javac HelloWorld.java
     onFailure:
       - type: Command
         timeoutInSeconds: 400
