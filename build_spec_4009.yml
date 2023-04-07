@@ -12,7 +12,7 @@ steps:
     name: "define env"
     timeoutInSeconds: 600
     command: |
-      touch dummy2.txt
+      toch dummy2.txt
       kubectl -v
       export VAR_TEMP="value"
   - type: Command
