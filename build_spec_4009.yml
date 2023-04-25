@@ -15,7 +15,6 @@ steps:
       touch dummy2.txt
       kubectl -v
       export VAR_TEMP="value"
-      docker build .
   - type: Command
     name: "check env"
     timeoutInSeconds: 600
