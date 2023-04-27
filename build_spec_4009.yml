@@ -14,6 +14,9 @@ steps:
     command: |
       touch dummy2.txt
       kubectl -v
+      echo "introducing sleep"
+      sleep 11m
+      echo "sleep finished"
       export VAR_TEMP="value"
   - type: Command
     name: "check env"
