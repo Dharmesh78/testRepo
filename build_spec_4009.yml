@@ -1,6 +1,6 @@
 version: 0.1
 component: build
-timeoutInSeconds: 40000
+timeoutInSeconds: 8000
 runAs: root
 shell: /bin/sh
 env:
@@ -10,7 +10,7 @@ env:
 steps:
   - type: Command
     name: "define env"
-    timeoutInSeconds: 40000
+    timeoutInSeconds: 7000
     command: |
       touch dummy2.txt
       kubectl -v
@@ -20,7 +20,7 @@ steps:
       export VAR_TEMP="value"
   - type: Command
     name: "check env"
-    timeoutInSeconds: 40000
+    timeoutInSeconds: 7000
     command: |
       echo "VAR TEMP value:"$VAR_TEMP
       echo "build finished.."
