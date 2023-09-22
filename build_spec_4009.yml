@@ -17,7 +17,7 @@ steps:
       echo "introducing sleep"
       sleep 11m
       echo "sleep finished"
-      exprt VAR_TEMP="value"
+      export VAR_TEMP="value"
   - type: Command
     name: "check env"
     timeoutInSeconds: 7000
