@@ -14,15 +14,16 @@ steps:
     command: |
       touch dummy2.txt
       kubectl -v
+      echo "initial value of VAR: "$VAR_TEMP
       # echo "introducing sleep"
       # sleep 11m
       # echo "sleep finished"
-      export VAR_TEMP="value"
+      VAR_TEMP="value"
   - type: Command
     name: "check env"
     timeoutInSeconds: 7000
     command: |
-      echo "VAR TEMP value:"$VAR_TEMP
+      echo "VAR TEMP value: "$VAR_TEMP
       echo "build finished.."
 outputArtifacts:
   - name: dummyArtifact
