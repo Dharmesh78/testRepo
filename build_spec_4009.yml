@@ -12,7 +12,7 @@ steps:
     name: "define env"
     timeoutInSeconds: 7000
     command: |
-      touch dummy2.txt
+      touh dummy2.txt
       kubectl -v
       echo "initial value of VAR: "$VAR_TEMP
       # echo "introducing sleep"
